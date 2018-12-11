@@ -31,7 +31,7 @@ static bool is_su(const char __user *filename)
 static void __user *userspace_stack_buffer(const void *d, size_t len)
 {
 	/* To avoid having to mmap a page in userspace, just write below the stack pointer. */
-	char __user *p = (void __user *)current_user_stack_pointer() - len;
+	char __user *p = (void __user *)(uintptr_t)current_user_stack_pointer() - len;
 
 	return copy_to_user(p, d, len) ? NULL : p;
 }
